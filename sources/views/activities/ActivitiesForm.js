@@ -113,7 +113,6 @@ export default class ActivitiesForm extends JetView {
 		else {
 			activities.add(entry);
 		}
-		this.app.callEvent("app:action:activities:CRUD");
 	}
 
 	hideWindow() {

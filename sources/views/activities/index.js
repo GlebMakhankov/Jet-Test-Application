@@ -69,7 +69,6 @@ export default class ActivitiesView extends JetView {
 				editActivity: (e, id) => {
 					const entry = this.$$("activitiesDatatable").getItem(id);
 					this.window.showWindow(entry);
-					this.app.callEvent("app:action:activities:CRUD");
 					return false;
 				},
 				deleteActivity: (e, id) => {
@@ -80,7 +79,6 @@ export default class ActivitiesView extends JetView {
 						})
 						.then(() => {
 							activities.remove(id);
-							this.app.callEvent("app:action:activities:CRUD");
 						});
 					return false;
 				}
@@ -97,8 +95,10 @@ export default class ActivitiesView extends JetView {
 	init() {
 		this.$$("activitiesDatatable").sync(activities);
 		this.window = this.ui(ActivitiesWindow);
-		this.on(this.app, "app:action:activities:CRUD", () => {
-			this.restoreFiltering();
+		activities.data.attachEvent("onStoreUpdated", (id, obj, mode) => {
+			if (mode === "add" || mode === "update" || mode === "delete") {
+				this.restoreFiltering();
+			}
 		});
 	}
 
