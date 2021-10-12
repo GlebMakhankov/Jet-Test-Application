@@ -1,6 +1,6 @@
 import {JetView} from "webix-jet";
 
-export default class ActivitiesToolbar extends JetView {
+export default class ActivitiesHeader extends JetView {
 	config() {
 		return {
 			view: "toolbar",

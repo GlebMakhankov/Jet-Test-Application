@@ -1,6 +1,6 @@
 import {JetView} from "webix-jet";
 
-export default class Toolbar extends JetView {
+export default class AppHeader extends JetView {
 	config() {
 		return {
 			view: "toolbar",
@@ -18,6 +18,9 @@ export default class Toolbar extends JetView {
 
 	init() {
 		this.setTitle("APP");
+		this.on(this.app, "app:action:top:setTitle", (title) => {
+			this.setTitle(title);
+		});
 	}
 
 	setTitle(title) {

@@ -1,8 +1,10 @@
 import {JetView} from "webix-jet";
 
-import Storage from "../../models/Storage";
+import activities from "../../models/activities";
+import activityTypes from "../../models/activityTypes";
+import contacts from "../../models/contacts";
+import ActivitiesHeader from "./ActivitiesHeader";
 import ActivitiesWindow from "./ActivitiesWindow";
-import ActivitiesToolbar from "./Activities_Toolbar";
 
 export default class ActivitiesView extends JetView {
 	config() {
@@ -26,7 +28,7 @@ export default class ActivitiesView extends JetView {
 				{
 					id: "TypeID",
 					header: ["Activity type", {content: "selectFilter"}],
-					options: Storage.activityTypes,
+					options: activityTypes,
 					sort: "text",
 					width: 120
 				},
@@ -41,12 +43,13 @@ export default class ActivitiesView extends JetView {
 					id: "Details",
 					header: ["Details", {content: "textFilter"}],
 					width: 120,
-					fillspace: true
+					fillspace: true,
+					sort: "text"
 				},
 				{
 					id: "ContactID",
 					header: ["Contact", {content: "selectFilter"}],
-					options: Storage.contacts,
+					options: contacts,
 					width: 150,
 					sort: "text"
 				},
@@ -54,20 +57,20 @@ export default class ActivitiesView extends JetView {
 					header: "",
 					template:
             "<span class='mdi mdi-square-edit-outline editActivity'></span>",
-					width: 50,
-					sort: "text"
+					width: 50
 				},
 				{
 					header: "",
 					template: "<span class='mdi mdi-delete deleteActivity'></span>",
-					width: 50,
-					sort: "text"
+					width: 50
 				}
 			],
 			onClick: {
 				editActivity: (e, id) => {
 					const entry = this.$$("activitiesDatatable").getItem(id);
-					this.window.setDataToForm(entry);
+					this.window.showWindow(entry);
+					this.app.callEvent("app:action:activities:CRUD");
+					return false;
 				},
 				deleteActivity: (e, id) => {
 					webix
@@ -76,21 +79,30 @@ export default class ActivitiesView extends JetView {
 							text: "Are you sure about that? This is cannot be undone!"
 						})
 						.then(() => {
-							Storage.activities.remove(id);
+							activities.remove(id);
+							this.app.callEvent("app:action:activities:CRUD");
 						});
+					return false;
 				}
 			}
 		};
 
 		const ui = {
-			rows: [ActivitiesToolbar, table]
+			rows: [ActivitiesHeader, table]
 		};
 
 		return ui;
 	}
 
 	init() {
-		this.$$("activitiesDatatable").sync(Storage.activities);
+		this.$$("activitiesDatatable").sync(activities);
 		this.window = this.ui(ActivitiesWindow);
+		this.on(this.app, "app:action:activities:CRUD", () => {
+			this.restoreFiltering();
+		});
+	}
+
+	restoreFiltering() {
+		this.$$("activitiesDatatable").filterByAll();
 	}
 }

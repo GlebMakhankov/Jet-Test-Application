@@ -1,10 +1,10 @@
 import {JetView, plugins} from "webix-jet";
 
-import Toolbar from "./toolbar";
+import AppHeader from "./AppHeader";
 
 export default class TopView extends JetView {
 	config() {
-		let menu = {
+		const menu = {
 			view: "menu",
 			id: "top:menu",
 			css: "app_menu",
@@ -18,14 +18,17 @@ export default class TopView extends JetView {
 				{value: "Settings", id: "settings", icon: "mdi mdi-cog"}
 			],
 			on: {
-				onAfterSelect: id => this.setTitle((this.$$("top:menu").getMenuItem(id).value))
+				onAfterSelect(id) {
+					this.$scope.setTitle((this.getMenuItem(id).value));
+				}
 			}
 		};
-		let ui = {
+
+		const ui = {
 			type: "wide",
 			css: "app_layout",
 			rows: [
-				{$subview: Toolbar, name: "header"},
+				AppHeader,
 				{
 					cols: [
 						{
@@ -48,6 +51,6 @@ export default class TopView extends JetView {
 	}
 
 	setTitle(title) {
-		this.getSubView("header").setTitle(title);
+		this.app.callEvent("app:action:top:setTitle", [title]);
 	}
 }

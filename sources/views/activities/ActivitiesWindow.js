@@ -12,11 +12,15 @@ export default class ActivitiesWindow extends JetView {
 			width: 650,
 			position: "center",
 			head: "Add activity",
-			body: {$subview: ActivitiesForm, name: "form"}
+			body: ActivitiesForm
 		};
 	}
 
-	showWindow() {
+	showWindow(data) {
+		if (data) {
+			this.changeHead("Edit");
+			this.setDataToForm(data);
+		}
 		this.getRoot().show();
 	}
 
@@ -26,9 +30,7 @@ export default class ActivitiesWindow extends JetView {
 	}
 
 	setDataToForm(data) {
-		this.getSubView("form").setDataToForm(data);
-		this.changeHead("Edit");
-		this.showWindow();
+		this.app.callEvent("app:action:activitiesWindow:setDataToForm", [data]);
 	}
 
 	changeHead(title = "Add") {

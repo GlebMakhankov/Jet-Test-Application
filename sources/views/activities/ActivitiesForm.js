@@ -1,6 +1,8 @@
 import {JetView} from "webix-jet";
 
-import Storage from "../../models/Storage";
+import activities from "../../models/activities";
+import activityTypes from "../../models/activityTypes";
+import contacts from "../../models/contacts";
 
 export default class ActivitiesForm extends JetView {
 	config() {
@@ -14,7 +16,6 @@ export default class ActivitiesForm extends JetView {
 			elements: [
 				{
 					view: "textarea",
-					id: "DetailsTextarea",
 					name: "Details",
 					label: "Details",
 					width: 650,
@@ -22,18 +23,16 @@ export default class ActivitiesForm extends JetView {
 				},
 				{
 					view: "richselect",
-					id: "richSelectActivitiesTypes",
 					name: "TypeID",
 					label: "Type",
-					options: Storage.activityTypes,
+					options: activityTypes,
 					invalidMessage: "Type filed is required!"
 				},
 				{
 					view: "richselect",
-					id: "richSelectContacts",
 					name: "ContactID",
 					label: "Contact",
-					options: Storage.contacts,
+					options: contacts,
 					invalidMessage: "Contact filed is required!"
 				},
 				{
@@ -55,7 +54,6 @@ export default class ActivitiesForm extends JetView {
 				},
 				{
 					view: "checkbox",
-					id: "stateCheckbox",
 					name: "State",
 					labelRight: "Completed",
 					labelWidth: 0,
@@ -87,6 +85,10 @@ export default class ActivitiesForm extends JetView {
 		};
 	}
 
+	init() {
+		this.on(this.app, "app:action:activitiesWindow:setDataToForm", data => this.setDataToForm(data));
+	}
+
 	setDataToForm(data) {
 		const form = this.$$("ActivitiesForm");
 		this.$$("saveBtn").setValue("Save");
@@ -105,12 +107,13 @@ export default class ActivitiesForm extends JetView {
 		const entry = form.getValues();
 		entry.DueDate = this.dateToStr(entry);
 		this.hideWindow();
-		if (Storage.activities.exists(entry.id)) {
-			Storage.activities.updateItem(entry.id, entry);
+		if (entry.id) {
+			activities.updateItem(entry.id, entry);
 		}
 		else {
-			Storage.activities.add(entry);
+			activities.add(entry);
 		}
+		this.app.callEvent("app:action:activities:CRUD");
 	}
 
 	hideWindow() {
