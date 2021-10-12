@@ -1,4 +1,4 @@
-const Contacts_Template_Toolbar = {
+const ContactsTemplateToolbar = {
   view: "toolbar",
   elements: [
     {
@@ -30,4 +30,4 @@ const Contacts_Template_Toolbar = {
   ],
 };
 
-export default Contacts_Template_Toolbar;
+export default ContactsTemplateToolbar;

@@ -1,5 +1,5 @@
-const Contacts_Template_Content = {
-  localId: "contactTemplate",
+const ContactsTemplateContent = {
+  localId: "ContactsTemplateContent",
   borderless: true,
   scroll: true,
   data: {
@@ -37,4 +37,4 @@ const Contacts_Template_Content = {
   },
 };
 
-export default Contacts_Template_Content;
+export default ContactsTemplateContent;

@@ -1,11 +1,11 @@
 import { JetView } from "webix-jet";
-import { Storage } from "../../models/Storage";
+import Storage from "../../models/Storage";
 
-export default class Activities_Form extends JetView {
+export default class ActivitiesForm extends JetView {
   config() {
     return {
       view: "form",
-      localId: "Activities_Form",
+      localId: "ActivitiesForm",
       rules: {
         TypeID: webix.rules.isNotEmpty,
         ContactID: webix.rules.isNotEmpty,
@@ -91,11 +91,11 @@ export default class Activities_Form extends JetView {
       data.Date = dateAndTime;
       data.Time = dateAndTime;
     }
-    this.$$("Activities_Form").setValues(data);
+    this.$$("ActivitiesForm").setValues(data);
   }
 
   saveEntry() {
-    const form = this.$$("Activities_Form");
+    const form = this.$$("ActivitiesForm");
     if (!form.validate()) return;
     const entry = form.getValues();
     entry.DueDate = this.dateToStr(entry);
@@ -112,7 +112,7 @@ export default class Activities_Form extends JetView {
   }
 
   clearAll() {
-    const form = this.$$("Activities_Form");
+    const form = this.$$("ActivitiesForm");
     form.clear();
     form.clearValidation();
   }
