@@ -1,27 +1,27 @@
 const ContactsTemplateContent = {
-  localId: "ContactsTemplateContent",
-  borderless: true,
-  scroll: true,
-  data: {
-    Email: "Email",
-    Skype: "Skype",
-    Job: "Job",
-    Company: "Company",
-    Birthday: "Date of Birth",
-    Location: "Location",
-    Status: "Status",
-  },
-  css: "contactInfo",
-  template: function (obj) {
-    return `
+	localId: "ContactsTemplateContent",
+	borderless: true,
+	scroll: true,
+	data: {
+		Email: "Email",
+		Skype: "Skype",
+		Job: "Job",
+		Company: "Company",
+		Birthday: "Date of Birth",
+		Location: "Location",
+		Status: "Status"
+	},
+	css: "contactInfo",
+	template(obj) {
+		return `
 			<div class="contactInfoImageBlock">
 				<img src="${
-          obj.photo
-            ? obj.photo
-            : "http://simpleicon.com/wp-content/uploads/user1.svg"
-        }"
+	obj.photo
+		? obj.photo
+		: "http://simpleicon.com/wp-content/uploads/user1.svg"
+}"
 				></img>
-				<div>${obj.Status ?? "-"}</div>
+				<div>${obj.Status || "-"}</div>
 			</div>
 			<div class="contactInfoTextBlock">
 				<ul>
@@ -34,7 +34,7 @@ const ContactsTemplateContent = {
 				</ul>
 			</div>
 	  `;
-  },
+	}
 };
 
 export default ContactsTemplateContent;
