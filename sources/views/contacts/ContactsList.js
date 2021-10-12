@@ -20,14 +20,9 @@ export default class ContactsList extends JetView {
 	}
 
 	init() {
-		this.$$("contactsList").sync(contacts);
-		contacts.waitData.then(() => {
-			this.initialSelection();
-		});
-	}
-
-	initialSelection() {
-		this.setContactInfoToTemplate(this.$$("contactsList").getFirstId());
+		const list = this.$$("contactsList");
+		list.sync(contacts);
+		contacts.waitData.then(() => this.setContactInfoToTemplate(list.getFirstId()));
 	}
 
 	getListItemHTML(obj) {
