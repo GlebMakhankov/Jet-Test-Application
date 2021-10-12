@@ -34,7 +34,7 @@ export default class ActivitiesView extends JetView {
 					id: "date",
 					header: ["DueDate", {content: "datepickerFilter"}],
 					width: 200,
-					sort: "text",
+					sort: "date",
 					format: webix.Date.dateToStr("%d %F %Y")
 				},
 				{

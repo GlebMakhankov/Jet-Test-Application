@@ -25,14 +25,16 @@ export default class ActivitiesForm extends JetView {
 					id: "richSelectActivitiesTypes",
 					name: "TypeID",
 					label: "Type",
-					options: Storage.activityTypes
+					options: Storage.activityTypes,
+					invalidMessage: "Type filed is required!"
 				},
 				{
 					view: "richselect",
 					id: "richSelectContacts",
 					name: "ContactID",
 					label: "Contact",
-					options: Storage.contacts
+					options: Storage.contacts,
+					invalidMessage: "Contact filed is required!"
 				},
 				{
 					cols: [
@@ -86,13 +88,15 @@ export default class ActivitiesForm extends JetView {
 	}
 
 	setDataToForm(data) {
+		const form = this.$$("ActivitiesForm");
 		this.$$("saveBtn").setValue("Save");
 		if (data.DueDate) {
 			const dateAndTime = this.strToDate(data.DueDate);
 			data.Date = dateAndTime;
 			data.Time = dateAndTime;
 		}
-		this.$$("ActivitiesForm").setValues(data);
+		form.clearValidation();
+		form.setValues(data);
 	}
 
 	saveEntry() {

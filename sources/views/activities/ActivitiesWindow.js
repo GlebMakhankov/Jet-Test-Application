@@ -6,6 +6,7 @@ export default class ActivitiesWindow extends JetView {
 	config() {
 		return {
 			view: "window",
+			modal: true,
 			localId: "ActivitiesWindow",
 			height: 500,
 			width: 650,
