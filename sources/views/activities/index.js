@@ -95,7 +95,7 @@ export default class ActivitiesView extends JetView {
 	init() {
 		this.$$("activitiesDatatable").sync(activities);
 		this.window = this.ui(ActivitiesWindow);
-		activities.data.attachEvent("onStoreUpdated", (id, obj, mode) => {
+		this.on(activities.data, "onStoreUpdated", (id, obj, mode) => {
 			if (mode === "add" || mode === "update" || mode === "delete") {
 				this.restoreFiltering();
 			}
