@@ -9,7 +9,11 @@ export default class MyApp extends JetApp {
 			version: VERSION,
 			router: BUILD_AS_MODULE ? EmptyRouter : HashRouter,
 			debug: !PRODUCTION,
-			start: "/top/contacts"
+			start: "/top/contacts",
+			view: {
+				"info": "contacts.Info",
+				"form": "contacts.Form"
+			}
 		};
 
 		super({...defaults, ...config});
