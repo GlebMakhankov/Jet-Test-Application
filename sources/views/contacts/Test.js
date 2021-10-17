@@ -1,5 +1,5 @@
 const Test = {
 	template: "Test"
-}
+};
 
-export default Test
+export default Test;

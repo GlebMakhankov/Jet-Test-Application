@@ -11,8 +11,8 @@ export default class MyApp extends JetApp {
 			debug: !PRODUCTION,
 			start: "/top/contacts",
 			view: {
-				"info": "contacts.Info",
-				"form": "contacts.Form"
+				info: "contacts.Info",
+				form: "contacts.Form"
 			}
 		};
 
