@@ -100,24 +100,22 @@ export default class InfoActivities extends JetView {
 	init() {
 		this.window = this.ui(ActivitiesWindow);
 		this.table = this.$$("contactActivitiesTable");
-		this.table.sync(activities);
-		this.filterDatatable();
+		this.processDataForTable();
 		this.on(activities.data, "onStoreUpdated", () => {
-			this.filterDatatable();
-		});
-		this.on(this.table, "onAfterFilter", () => {
-			this.filterDatatable();
+			this.processDataForTable();
 		});
 	}
 
 	urlChange() {
-		this.filterDatatable();
+		this.processDataForTable();
 	}
 
-	filterDatatable() {
+	processDataForTable(){
 		this.id = this.getParam("id", true);
-		activities.waitData.then(() => {
-			this.table.filter(obj => +obj.ContactID === +this.id);
-		});
+		const data = [];
+		activities.data.each((obj) => {
+			if(+obj.ContactID === +this.id) data.push(obj)
+		})
+		this.table.parse(data);
 	}
 }
