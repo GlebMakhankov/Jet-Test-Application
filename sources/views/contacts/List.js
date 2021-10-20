@@ -43,7 +43,7 @@ export default class List extends JetView {
 		});
 
 		this.on(this.app, "app:action:contacts:showInfo", () => {
-			this.list.select(this.list.getSelectedId());
+			this.setCurrentItem(this.list.getSelectedId());
 		});
 
 		this.on(contacts.data, "onStoreUpdated", (id, obj, mode) => {
