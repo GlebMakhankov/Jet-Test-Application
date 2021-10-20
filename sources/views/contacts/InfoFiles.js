@@ -26,18 +26,10 @@ export default class InfoFiles extends JetView {
 							format: webix.Date.dateToStr("%d %F %Y")
 						},
 						{
-							id: "sizetext",
+							id: "size",
 							header: "Size",
 							width: 120,
-							sort: (a, b) => {
-								if (a.size > b.size) {
-									return 1;
-								}
-								else if (a.size > b.size) {
-									return -1;
-								}
-								return 0;
-							},
+							sort: "int",
 							template: obj => obj.sizetext
 						},
 						{
