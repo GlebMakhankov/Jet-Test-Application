@@ -100,7 +100,7 @@ export default class ActivitiesForm extends JetView {
 		this.form.clearValidation();
 		this.form.setValues(data);
 		if (data.readonly) {
-			this.form.elements.ContactID.config.readonly = true;
+			this.form.elements.ContactID.disable();
 			this.form.elements.ContactID.refresh();
 		}
 	}
@@ -122,8 +122,6 @@ export default class ActivitiesForm extends JetView {
 		this.getParentView().hideWindow();
 		this.clearAll();
 		this.$$("saveBtn").setValue("Add");
-		this.form.elements.ContactID.config.readonly = false;
-		this.form.elements.ContactID.refresh();
 	}
 
 	clearAll() {

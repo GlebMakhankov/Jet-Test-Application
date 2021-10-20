@@ -10,14 +10,17 @@ export default class Form extends JetView {
 				{
 					localId: "formTitle",
 					template: obj => `${obj.title || "Add new"} contact`,
-					height: 50
+					height: 50,
+					css: "contactsFormTitle"
 				},
 				{
 					view: "form",
 					localId: "contactForm",
+					css: "contactsForm",
 					rules: {
 						FirstName: webix.rules.isNotEmpty,
-						LastName: webix.rules.isNotEmpty
+						LastName: webix.rules.isNotEmpty,
+						StatusID: webix.rules.isNotEmpty
 					},
 					elements: [
 						{
@@ -30,13 +33,15 @@ export default class Form extends JetView {
 											view: "text",
 											label: "First name",
 											name: "FirstName",
-											labelWidth: 120
+											labelWidth: 120,
+											invalidMessage: "First name is required!"
 										},
 										{
 											view: "text",
 											label: "Last name",
 											name: "LastName",
-											labelWidth: 120
+											labelWidth: 120,
+											invalidMessage: "Last name is required!"
 										},
 										{
 											view: "datepicker",
@@ -49,7 +54,7 @@ export default class Form extends JetView {
 											name: "StatusID",
 											label: "Status",
 											options: statuses,
-											invalidMessage: "Contact filed is required!",
+											invalidMessage: "Contact field is required!",
 											labelWidth: 120
 										},
 										{
@@ -167,6 +172,7 @@ export default class Form extends JetView {
 
 	urlChange() {
 		this.id = this.getParam("id", true);
+		if (+this.id === 0) this.clearAll();
 		if (this.id) {
 			this.form.setValues(contacts.getItem(this.id));
 			this.$$("formTitle").setValues({title: "Edit"});
@@ -177,6 +183,9 @@ export default class Form extends JetView {
 	saveContact() {
 		if (!this.form.validate()) return;
 		const entry = this.form.getValues();
+		const parser = webix.Date.dateToStr("%Y-%m-%d %H:%i");
+		entry.StartDate = parser(entry.StartDate) || parser(new Date());
+		entry.Birthday = parser(entry.Birthday) || entry.StartDate;
 		if (entry.id) {
 			contacts.updateItem(entry.id, entry);
 		}
@@ -187,9 +196,8 @@ export default class Form extends JetView {
 	}
 
 	close() {
-		//  this.app.callEvent("app:action:contacts:closeForm", [this.id]);
 		this.clearAll();
-		this.app.show("top/contacts/contacts.Info");
+		this.app.callEvent("app:action:contacts:showInfo");
 		this.$$("SaveBtn").setValue("Add");
 	}
 

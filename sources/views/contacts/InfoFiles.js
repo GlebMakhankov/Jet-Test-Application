@@ -29,7 +29,16 @@ export default class InfoFiles extends JetView {
 							id: "sizetext",
 							header: "Size",
 							width: 120,
-							sort: "text"
+							sort: (a, b) => {
+								if (a.size > b.size) {
+									return 1;
+								}
+								else if (a.size > b.size) {
+									return -1;
+								}
+								return 0;
+							},
+							template: obj => obj.sizetext
 						},
 						{
 							header: "",
@@ -65,7 +74,7 @@ export default class InfoFiles extends JetView {
 							on: {
 								onAfterFileAdd: (obj) => {
 									obj.changeDate = new Date();
-									obj.ContactID = this.ContactID;
+									obj.ContactID = this.id;
 									files.add(obj);
 								}
 							}
@@ -80,13 +89,15 @@ export default class InfoFiles extends JetView {
 	init() {
 		this.table = this.$$("filesTable");
 		this.table.sync(files);
-		this.on(this.app, "app:action:contacts:setUserInfo", (info) => {
-			this.ContactID = info.ContactID;
-			this.filterDatatable(this.table, this.ContactID);
+		this.filterDatatable();
+		this.on(files.data, "onStoreUpdated", () => {
+			this.filterDatatable();
 		});
+		this.id = this.getParam("id", true);
 	}
 
-	filterDatatable(view, id) {
-		view.filter(obj => obj.ContactID === id);
+	filterDatatable() {
+		this.id = this.getParam("id", true);
+		this.table.filter(obj => +obj.ContactID === +this.id);
 	}
 }

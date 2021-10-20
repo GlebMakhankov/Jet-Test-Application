@@ -11,27 +11,12 @@ export default class ContactsView extends JetView {
 	}
 
 	init() {
-		// this.show("contacts.Info");
-		// this.on(this.app, "app:action:contacts:showInfo", () => {
-		// 	this.show("contacts.Info");
-		// });
-		// this.on(this.app, "app:action:contacts:showForm", () => {
-		// 	this.show("contacts.Form");
-		// });
+		this.show("contacts.Info");
+		this.on(this.app, "app:action:contacts:showInfo", () => {
+			this.show("contacts.Info");
+		});
+		this.on(this.app, "app:action:contacts:showForm", () => {
+			this.show("contacts.Form");
+		});
 	}
-
-	urlChange(){//!!! Срабатывает только на перерендер
-		const id = this.getParam("id", true);
-		console.log("Index:", id) 
-	}
-
-	// setContactInfoToTemplate(item) {
-	// 	this.app.callEvent("app:action:contacts:setUsername", [
-	// 		{
-	// 			name: item.FirstName,
-	// 			surname: item.LastName
-	// 		}
-	// 	]);
-	// 	this.app.callEvent("app:action:contacts:setUserInfo", [item]);
-	// }
 }

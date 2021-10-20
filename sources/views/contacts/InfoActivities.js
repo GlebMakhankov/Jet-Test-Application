@@ -12,7 +12,6 @@ export default class InfoActivities extends JetView {
 					view: "datatable",
 					minWidth: 700,
 					localId: "contactActivitiesTable",
-					hover: "movieTableRowHover",
 					select: "row",
 					columns: [
 						{
@@ -88,7 +87,7 @@ export default class InfoActivities extends JetView {
 							type: "icon",
 							icon: "mdi mdi-plus-circle",
 							click: () => this.window.showWindow({
-								ContactID: this.ContactID,
+								ContactID: this.id,
 								readonly: true
 							})
 						}
@@ -102,13 +101,23 @@ export default class InfoActivities extends JetView {
 		this.window = this.ui(ActivitiesWindow);
 		this.table = this.$$("contactActivitiesTable");
 		this.table.sync(activities);
-		this.on(this.app, "app:action:contacts:setUserInfo", (info) => {
-			this.ContactID = info.ContactID;
-			this.filterDatatable(this.table, info.ContactID);
+		this.filterDatatable();
+		this.on(activities.data, "onStoreUpdated", () => {
+			this.filterDatatable();
+		});
+		this.on(this.table, "onAfterFilter", () => {
+			this.filterDatatable();
 		});
 	}
 
-	filterDatatable(view, id) {
-		view.filter(obj => obj.ContactID === id);
+	urlChange() {
+		this.filterDatatable();
+	}
+
+	filterDatatable() {
+		this.id = this.getParam("id", true);
+		activities.waitData.then(() => {
+			this.table.filter(obj => +obj.ContactID === +this.id);
+		});
 	}
 }
