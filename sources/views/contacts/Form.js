@@ -168,6 +168,7 @@ export default class Form extends JetView {
 
 	init() {
 		this.form = this.$$("contactForm");
+		this.parent = this.getParentView();
 	}
 
 	urlChange() {
@@ -190,7 +191,9 @@ export default class Form extends JetView {
 			contacts.updateItem(entry.id, entry);
 		}
 		else {
-			contacts.add(entry);
+			contacts
+				.waitSave(() => contacts.add(entry))
+				.then(obj => this.parent.setParam("id", obj.id, true));
 		}
 		this.close();
 	}

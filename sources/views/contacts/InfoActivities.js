@@ -110,12 +110,13 @@ export default class InfoActivities extends JetView {
 		this.processDataForTable();
 	}
 
-	processDataForTable(){
+	processDataForTable() {
 		this.id = this.getParam("id", true);
 		const data = [];
 		activities.data.each((obj) => {
-			if(+obj.ContactID === +this.id) data.push(obj)
-		})
+			if (+obj.ContactID === +this.id) data.push(obj);
+		});
+		this.table.clearAll();
 		this.table.parse(data);
 	}
 }

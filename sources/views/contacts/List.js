@@ -39,31 +39,28 @@ export default class List extends JetView {
 		this.list.sync(contacts);
 
 		contacts.waitData.then(() => {
-			this.setCurrentItem(this.list.getFirstId());
+			this.list.select(this.list.getFirstId());
 		});
 
 		this.on(this.app, "app:action:contacts:showInfo", () => {
-			this.setCurrentItem(this.list.getSelectedId());
+			this.list.select(this.list.getSelectedId());
 		});
 
 		this.on(contacts.data, "onStoreUpdated", (id, obj, mode) => {
 			switch (mode) {
 				case "add":
 				case "update":
-					this.setCurrentItem(id);
+					this.list.select(id);
 					break;
 				case "delete":
-					this.setCurrentItem(this.list.getFirstId());
-					break;
-
 				default:
+					this.list.select(this.list.getFirstId());
 					break;
 			}
 		});
 	}
 
 	setCurrentItem(id) {
-		this.list.select(id);
 		this.parent.setParam("id", id, true);
 		this.parent.show("contacts.Info");
 	}

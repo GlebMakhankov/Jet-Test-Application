@@ -5,7 +5,7 @@ const contacts = new webix.DataCollection({
 		$init(item) {
 			item.ContactID = item.id;
 			item.value = `${item.FirstName} ${item.LastName}`;
-		},
+		}
 	}
 });
 
