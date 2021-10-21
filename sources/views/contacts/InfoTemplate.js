@@ -33,11 +33,9 @@ export default class InfoTemplate extends JetView {
 
 	setInfo() {
 		this.id = this.getParam("id", true);
-		statuses.waitData.then(() => {
-			contacts.waitData.then(() => {
-				this.$$("ContactsUserInfo").setValues(contacts.getItem(this.id));
-			});
-		});
+		webix.promise
+			.all([statuses.waitData, contacts.waitData])
+			.then(() => this.$$("ContactsUserInfo").setValues(contacts.getItem(this.id)));
 	}
 
 	getTemplate(obj) {

@@ -11,12 +11,11 @@ export default class ContactsView extends JetView {
 	}
 
 	init() {
-		this.show("contacts.Info");
 		this.on(this.app, "app:action:contacts:showInfo", () => {
-			this.show("contacts.Info");
+			this.show("info");
 		});
 		this.on(this.app, "app:action:contacts:showForm", () => {
-			this.show("contacts.Form");
+			this.show("form");
 		});
 	}
 }
