@@ -5,6 +5,7 @@ import statuses from "../../models/statuses";
 
 export default class Form extends JetView {
 	config() {
+		const myLabelWidth = 120;
 		return {
 			rows: [
 				{
@@ -33,21 +34,21 @@ export default class Form extends JetView {
 											view: "text",
 											label: "First name",
 											name: "FirstName",
-											labelWidth: 120,
+											labelWidth: myLabelWidth,
 											invalidMessage: "First name is required!"
 										},
 										{
 											view: "text",
 											label: "Last name",
 											name: "LastName",
-											labelWidth: 120,
+											labelWidth: myLabelWidth,
 											invalidMessage: "Last name is required!"
 										},
 										{
 											view: "datepicker",
 											label: "Joining date",
 											name: "StartDate",
-											labelWidth: 120
+											labelWidth: myLabelWidth
 										},
 										{
 											view: "richselect",
@@ -55,32 +56,32 @@ export default class Form extends JetView {
 											label: "Status",
 											options: statuses,
 											invalidMessage: "Contact field is required!",
-											labelWidth: 120
+											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
 											label: "Job",
 											name: "Job",
-											labelWidth: 120
+											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
 											label: "Company",
 											name: "Company",
-											labelWidth: 120
+											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
 											label: "Website",
 											name: "Website",
-											labelWidth: 120
+											labelWidth: myLabelWidth
 										},
 										{
 											view: "textarea",
 											name: "Address",
 											label: "Address",
 											height: 100,
-											labelWidth: 120
+											labelWidth: myLabelWidth
 										}
 									]
 								},
@@ -91,33 +92,33 @@ export default class Form extends JetView {
 											view: "text",
 											label: "Email",
 											name: "Email",
-											labelWidth: 120
+											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
 											label: "Skype",
 											name: "Skype",
-											labelWidth: 120
+											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
 											label: "Phone",
 											name: "Phone",
-											labelWidth: 120
+											labelWidth: myLabelWidth
 										},
 										{
 											view: "datepicker",
 											label: "Birthday",
 											name: "Birthday",
-											labelWidth: 120
+											labelWidth: myLabelWidth
 										},
 										{
 											margin: 20,
 											cols: [
 												{
 													template: `
-										<img src="http://simpleicon.com/wp-content/uploads/user1.svg" />
-										`
+														<img src="http://simpleicon.com/wp-content/uploads/user1.svg" />
+													`
 												},
 												{
 													margin: 20,
@@ -169,6 +170,8 @@ export default class Form extends JetView {
 	init() {
 		this.form = this.$$("contactForm");
 		this.parent = this.getParentView();
+		this.saveBtn = this.$$("SaveBtn");
+		this.formTitle = this.$$("formTitle");
 	}
 
 	urlChange() {
@@ -176,8 +179,8 @@ export default class Form extends JetView {
 		if (+this.id === 0) this.clearAll();
 		if (this.id) {
 			this.form.setValues(contacts.getItem(this.id));
-			this.$$("formTitle").setValues({title: "Edit"});
-			this.$$("SaveBtn").setValue("Save");
+			this.formTitle.setValues({title: "Edit"});
+			this.saveBtn.setValue("Save");
 		}
 	}
 
@@ -201,7 +204,7 @@ export default class Form extends JetView {
 	close() {
 		this.clearAll();
 		this.app.callEvent("app:action:contacts:showInfo");
-		this.$$("SaveBtn").setValue("Add");
+		this.saveBtn.setValue("Add");
 	}
 
 	clearAll() {

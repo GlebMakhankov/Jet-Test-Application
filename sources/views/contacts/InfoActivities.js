@@ -48,7 +48,7 @@ export default class InfoActivities extends JetView {
 						{
 							header: "",
 							template:
-                "<span class='mdi mdi-square-edit-outline editActivity'></span>",
+								"<span class='mdi mdi-square-edit-outline editActivity'></span>",
 							width: 50
 						},
 						{
@@ -112,11 +112,9 @@ export default class InfoActivities extends JetView {
 
 	processDataForTable() {
 		this.id = this.getParam("id", true);
-		const data = [];
-		activities.data.each((obj) => {
-			if (+obj.ContactID === +this.id) data.push(obj);
-		});
 		this.table.clearAll();
-		this.table.parse(data);
+		this.table.parse(
+			activities.data.find(obj => +obj.ContactID === +this.id)
+		);
 	}
 }

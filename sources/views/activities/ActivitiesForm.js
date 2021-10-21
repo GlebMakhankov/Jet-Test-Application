@@ -65,7 +65,7 @@ export default class ActivitiesForm extends JetView {
 						{},
 						{
 							view: "button",
-							value: "Save",
+							value: "Add",
 							localId: "saveBtn",
 							width: 130,
 							align: "center",
@@ -87,17 +87,18 @@ export default class ActivitiesForm extends JetView {
 
 	init() {
 		this.form = this.$$("ActivitiesForm");
+		this.saveBtn = this.$$("saveBtn");
 		this.on(this.app, "app:action:activitiesWindow:setDataToForm", data => this.setDataToForm(data));
 	}
 
 	setDataToForm(data) {
-		this.$$("saveBtn").setValue("Save");
+		this.saveBtn.setValue("Save");
 		if (data.DueDate) {
 			const dateAndTime = this.strToDate(data.DueDate);
 			data.Date = dateAndTime;
 			data.Time = dateAndTime;
 		}
-		this.form.clearValidation();
+		this.clearAll();
 		this.form.setValues(data);
 		if (data.readonly) {
 			this.form.elements.ContactID.disable();
@@ -121,7 +122,7 @@ export default class ActivitiesForm extends JetView {
 	hideWindow() {
 		this.getParentView().hideWindow();
 		this.clearAll();
-		this.$$("saveBtn").setValue("Add");
+		this.saveBtn.setValue("Add");
 	}
 
 	clearAll() {

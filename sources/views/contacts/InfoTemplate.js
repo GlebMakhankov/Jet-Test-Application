@@ -33,7 +33,6 @@ export default class InfoTemplate extends JetView {
 
 	setInfo() {
 		this.id = this.getParam("id", true);
-		//  if (!this.id) return;
 		statuses.waitData.then(() => {
 			contacts.waitData.then(() => {
 				this.$$("ContactsUserInfo").setValues(contacts.getItem(this.id));
