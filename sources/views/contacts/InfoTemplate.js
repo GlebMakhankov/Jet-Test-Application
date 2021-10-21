@@ -1,6 +1,9 @@
 import {JetView} from "webix-jet";
 
-export default class ContactsUserInfo extends JetView {
+import contacts from "../../models/contacts";
+import statuses from "../../models/statuses";
+
+export default class InfoTemplate extends JetView {
 	config() {
 		return {
 			localId: "ContactsUserInfo",
@@ -21,13 +24,18 @@ export default class ContactsUserInfo extends JetView {
 	}
 
 	init() {
-		this.on(this.app, "app:action:contacts:setUserInfo", (info) => {
-			this.setUserInfo(info);
-		});
+		this.setInfo();
 	}
 
-	setUserInfo(info) {
-		this.$$("ContactsUserInfo").setValues(info);
+	urlChange() {
+		this.setInfo();
+	}
+
+	setInfo() {
+		this.id = this.getParam("id", true);
+		webix.promise
+			.all([statuses.waitData, contacts.waitData])
+			.then(() => this.$$("ContactsUserInfo").setValues(contacts.getItem(this.id)));
 	}
 
 	getTemplate(obj) {
@@ -39,7 +47,7 @@ export default class ContactsUserInfo extends JetView {
 		: "http://simpleicon.com/wp-content/uploads/user1.svg"
 }"
 			></img>
-			<div>${obj.Status || "-"}</div>
+			<div>${obj.StatusID ? statuses.data.getItem(obj.StatusID).value : "-"}</div>
 		</div>
 		<div class="contactInfoTextBlock">
 			<ul>
@@ -47,7 +55,9 @@ export default class ContactsUserInfo extends JetView {
 				<li><i class="mdi mdi-skype"></i> ${obj.Skype || "-"}</li>
 				<li><i class="mdi mdi-tag"></i> ${obj.Job || "-"}</li>
 				<li><i class="mdi mdi-briefcase"></i> ${obj.Company || "-"}</li>
-				<li><i class="mdi mdi-calendar"></i> ${obj.Birthday || "-"}</li>
+				<li><i class="mdi mdi-calendar"></i> ${
+	webix.Date.dateToStr("%d %F %Y")(obj.Birthday) || "-"
+}</li>
 				<li><i class="mdi mdi-map-marker"></i> ${obj.Address || "-"}</li>
 			</ul>
 		</div>

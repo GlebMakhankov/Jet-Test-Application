@@ -1,26 +1,21 @@
 import {JetView} from "webix-jet";
 
-import ContactsHeader from "./ContactsHeader";
-import ContactsList from "./ContactsList";
-import ContactsUserInfo from "./ContactsUserInfo";
+import List from "./List";
 
 export default class ContactsView extends JetView {
 	config() {
-		const template = {
-			rows: [ContactsHeader, ContactsUserInfo]
-		};
-
 		const ui = {
-			cols: [ContactsList, template]
+			cols: [List, {$subview: true}]
 		};
 		return ui;
 	}
 
-	setContactInfoToTemplate(item) {
-		this.app.callEvent("app:action:contacts:setUsername", [{
-			name: item.FirstName,
-			surname: item.LastName
-		}]);
-		this.app.callEvent("app:action:contacts:setUserInfo", [item]);
+	init() {
+		this.on(this.app, "app:action:contacts:showInfo", () => {
+			this.show("info");
+		});
+		this.on(this.app, "app:action:contacts:showForm", () => {
+			this.show("form");
+		});
 	}
 }
