@@ -4,6 +4,7 @@ import files from "../../models/files";
 
 export default class InfoFiles extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			rows: [
 				{
@@ -14,20 +15,20 @@ export default class InfoFiles extends JetView {
 					columns: [
 						{
 							id: "name",
-							header: "Name",
+							header: _("Name"),
 							sort: "text",
 							fillspace: true
 						},
 						{
 							id: "changeDate",
-							header: "Change Date",
+							header: _("Change Date"),
 							sort: "date",
 							width: 120,
 							format: webix.Date.dateToStr("%d %F %Y")
 						},
 						{
 							id: "size",
-							header: "Size",
+							header: _("Size"),
 							width: 120,
 							sort: "int",
 							template: obj => obj.sizetext
@@ -42,8 +43,8 @@ export default class InfoFiles extends JetView {
 						deleteActivity: (e, id) => {
 							webix
 								.confirm({
-									title: "Delete file?",
-									text: "Are you sure about that? This is cannot be undone!"
+									title: _("Delete file?"),
+									text: _("Are you sure about that? This is cannot be undone!")
 								})
 								.then(() => {
 									files.remove(id);
@@ -59,7 +60,7 @@ export default class InfoFiles extends JetView {
 						{
 							view: "uploader",
 							localId: "fileUploader",
-							value: "Upload file",
+							value: _("Upload file"),
 							link: "files",
 							upload: files,
 							autosend: false,

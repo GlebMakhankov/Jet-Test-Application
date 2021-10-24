@@ -5,11 +5,12 @@ import statuses from "../../models/statuses";
 
 export default class List extends JetView {
   config() {
+    const _ = this.app.getService("locale")._;
     return {
       rows: [
         {
           view: "search",
-          placeholder: "type to find matching contacts",
+          placeholder: _("list_search_placeholder"),
           localId: "listSearch",
           on: {
             onTimedKeyPress: () => this.listFilter(),
@@ -30,7 +31,7 @@ export default class List extends JetView {
         },
         {
           view: "button",
-          label: "Add contact",
+          label: _("Add contact"),
           type: "icon",
           icon: "mdi mdi-plus-circle",
           click: () => {
@@ -82,31 +83,31 @@ export default class List extends JetView {
 
     const firstChar = filterQuery.charAt(0);
     if (firstChar === "=" || firstChar === ">" || firstChar === "<") {
-		return this.listFilterByDate(filterQuery, firstChar);
+      return this.listFilterByDate(filterQuery, firstChar);
     }
 
     this.listFilterByText(filterQuery);
   }
 
-  listFilterByDate(filterQuery, firstChar){
-	this.list.filter((contact) => {
-		const birthdayYear = this.strToDate(contact.Birthday).getFullYear();
-		const query = +filterQuery.slice(1);
-		switch (firstChar) {
-		  case "=":
-			 return birthdayYear === query;
-		  case ">":
-			 return birthdayYear > query;
-		  case "<":
-			 return birthdayYear < query;
-		  default:
-			 return true;
-		}
-	 });
+  listFilterByDate(filterQuery, firstChar) {
+    this.list.filter((contact) => {
+      const birthdayYear = this.strToDate(contact.Birthday).getFullYear();
+      const query = +filterQuery.slice(1);
+      switch (firstChar) {
+        case "=":
+          return birthdayYear === query;
+        case ">":
+          return birthdayYear > query;
+        case "<":
+          return birthdayYear < query;
+        default:
+          return true;
+      }
+    });
   }
 
-  listFilterByText(filterQuery){
-	this.list.filter((contact) => {
+  listFilterByText(filterQuery) {
+    this.list.filter((contact) => {
       let baseStr = "";
       const values = Object.entries(contact);
       values.forEach((propArr) => {
