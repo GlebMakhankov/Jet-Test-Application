@@ -66,9 +66,13 @@ export default {
   "This week": "Неделя",
   "This month": "Месяц",
 
-
   //Settings
   //Lang
   Russian: "Русский",
   English: "Английский",
+  "Type of activity": "Тип события",
+  "Icon name": "Название иконки",
+  Icon: "Иконка",
+  Value: "Название",
+  "Status name":"Название статуса"
 };

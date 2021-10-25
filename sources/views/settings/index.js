@@ -1,5 +1,8 @@
 import { JetView } from "webix-jet";
 
+import activityTypesTable from "./activityTypesTable";
+import statusesTable from "./statusesTable";
+
 export default class SettingsView extends JetView {
   config() {
     this._ = this.app.getService("locale")._;
@@ -15,7 +18,8 @@ export default class SettingsView extends JetView {
       click: () => this.toggleLanguage(),
     };
 
-    return { rows: [segmentedButton, {}] };
+ 
+    return { rows: [segmentedButton, { cols: [activityTypesTable, statusesTable] }] };
   }
 
   init() {

@@ -70,4 +70,9 @@ export default {
   //Lang
   Russian: "Russian",
   English: "English",
+  "Type of activity": "Type of activity",
+  "Icon name": "Icon name",
+  Icon: "Icon",
+  Value: "Value",
+  "Status name": "Status name",
 };
