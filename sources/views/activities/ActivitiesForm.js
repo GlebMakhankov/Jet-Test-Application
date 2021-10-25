@@ -6,7 +6,7 @@ import contacts from "../../models/contacts";
 
 export default class ActivitiesForm extends JetView {
 	config() {
-		this._ = this.app.getService("locale")._;
+		const _ = this.app.getService("locale")._;
 		return {
 			view: "form",
 			localId: "ActivitiesForm",
@@ -18,21 +18,21 @@ export default class ActivitiesForm extends JetView {
 				{
 					view: "textarea",
 					name: "Details",
-					label: this._("Details"),
+					label: _("Details"),
 					width: 650,
 					height: 100
 				},
 				{
 					view: "richselect",
 					name: "TypeID",
-					label: this._("Type"),
+					label: _("Type"),
 					options: activityTypes,
 					invalidMessage: "Type filed is required!"
 				},
 				{
 					view: "richselect",
 					name: "ContactID",
-					label: this._("Contact"),
+					label: _("Contact"),
 					options: contacts,
 					invalidMessage: "Contact filed is required!"
 				},
@@ -40,13 +40,13 @@ export default class ActivitiesForm extends JetView {
 					cols: [
 						{
 							view: "datepicker",
-							label: this._("Date"),
+							label: _("Date"),
 							name: "Date",
 							width: 300
 						},
 						{
 							view: "datepicker",
-							label: this._("Time"),
+							label: _("Time"),
 							name: "Time",
 							type: "time",
 							width: 300
@@ -56,7 +56,7 @@ export default class ActivitiesForm extends JetView {
 				{
 					view: "checkbox",
 					name: "State",
-					labelRight: this._("Completed"),
+					labelRight: _("Completed"),
 					labelWidth: 0,
 					checkValue: "Open",
 					uncheckValue: "Close"
@@ -66,7 +66,7 @@ export default class ActivitiesForm extends JetView {
 						{},
 						{
 							view: "button",
-							value: this._("Add"),
+							value: _("Add"),
 							localId: "saveBtn",
 							width: 130,
 							align: "center",
@@ -75,7 +75,7 @@ export default class ActivitiesForm extends JetView {
 						},
 						{
 							view: "button",
-							value: this._("Cancel"),
+							value: _("Cancel"),
 							width: 130,
 							align: "center",
 							click: () => this.hideWindow()
@@ -93,7 +93,8 @@ export default class ActivitiesForm extends JetView {
 	}
 
 	setDataToForm(data) {
-		this.saveBtn.setValue(this._("Save"));
+		const _ = this.app.getService("locale")._;
+		this.saveBtn.setValue(_("Save"));
 		if (data.DueDate) {
 			const dateAndTime = this.strToDate(data.DueDate);
 			data.Date = dateAndTime;
@@ -121,9 +122,10 @@ export default class ActivitiesForm extends JetView {
 	}
 
 	hideWindow() {
+		const _ = this.app.getService("locale")._;
 		this.getParentView().hideWindow();
 		this.clearAll();
-		this.saveBtn.setValue(this._("Add"));
+		this.saveBtn.setValue(_("Add"));
 	}
 
 	clearAll() {

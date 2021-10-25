@@ -8,7 +8,7 @@ import ActivitiesWindow from "./ActivitiesWindow";
 
 export default class ActivitiesView extends JetView {
 	config() {
-		this._ = this.app.getService("locale")._;
+		const _ = this.app.getService("locale")._;
 
 		const table = {
 			view: "datatable",
@@ -29,28 +29,28 @@ export default class ActivitiesView extends JetView {
 				},
 				{
 					id: "TypeID",
-					header: [this._("Activity type"), {content: "selectFilter"}],
+					header: [_("Activity type"), {content: "selectFilter"}],
 					options: activityTypes,
 					sort: "text",
 					width: 120
 				},
 				{
 					id: "date",
-					header: [this._("DueDate"), {content: "datepickerFilter"}],
+					header: [_("DueDate"), {content: "datepickerFilter"}],
 					width: 200,
 					sort: "date",
 					format: webix.Date.dateToStr("%d %F %Y")
 				},
 				{
 					id: "Details",
-					header: [this._("Details"), {content: "textFilter"}],
+					header: [_("Details"), {content: "textFilter"}],
 					width: 120,
 					fillspace: true,
 					sort: "text"
 				},
 				{
 					id: "ContactID",
-					header: [this._("Contact"), {content: "selectFilter"}],
+					header: [_("Contact"), {content: "selectFilter"}],
 					options: contacts,
 					width: 150,
 					sort: "text"
@@ -76,8 +76,8 @@ export default class ActivitiesView extends JetView {
 				deleteActivity: (e, id) => {
 					webix
 						.confirm({
-							title: this._("Delete activity?"),
-							text: this._("Are you sure about that? This is cannot be undone!")
+							title: _("Delete activity?"),
+							text: _("Are you sure about that? This is cannot be undone!")
 						})
 						.then(() => {
 							activities.remove(id);

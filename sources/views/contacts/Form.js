@@ -5,13 +5,13 @@ import statuses from "../../models/statuses";
 
 export default class Form extends JetView {
 	config() {
-		this._ = this.app.getService("locale")._;
+		const _ = this.app.getService("locale")._;
 		const myLabelWidth = 120;
 		return {
 			rows: [
 				{
 					localId: "formTitle",
-					template: obj => `${obj.title || this._("Add new")} ${this._("contact")}`,
+					template: obj => `${obj.title || _("Add new")} ${_("contact")}`,
 					height: 50,
 					css: "contactsFormTitle"
 				},
@@ -33,53 +33,53 @@ export default class Form extends JetView {
 									rows: [
 										{
 											view: "text",
-											label: this._("First name"),
+											label: _("First name"),
 											name: "FirstName",
 											labelWidth: myLabelWidth,
 											invalidMessage: "First name is required!"
 										},
 										{
 											view: "text",
-											label: this._("Last name"),
+											label: _("Last name"),
 											name: "LastName",
 											labelWidth: myLabelWidth,
 											invalidMessage: "Last name is required!"
 										},
 										{
 											view: "datepicker",
-											label: this._("Joining date"),
+											label: _("Joining date"),
 											name: "StartDate",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "richselect",
 											name: "StatusID",
-											label: this._("Status"),
+											label: _("Status"),
 											options: statuses,
 											invalidMessage: "Contact field is required!",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
-											label: this._("Job"),
+											label: _("Job"),
 											name: "Job",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
-											label: this._("Company"),
+											label: _("Company"),
 											name: "Company",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
-											label: this._("Website"),
+											label: _("Website"),
 											name: "Website",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "textarea",
-											name: this._("Address"),
+											name: _("Address"),
 											label: "Address",
 											height: 100,
 											labelWidth: myLabelWidth
@@ -91,25 +91,25 @@ export default class Form extends JetView {
 									rows: [
 										{
 											view: "text",
-											label: this._("Email"),
+											label: _("Email"),
 											name: "Email",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
-											label: this._("Skype"),
+											label: _("Skype"),
 											name: "Skype",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
-											label: this._("Phone"),
+											label: _("Phone"),
 											name: "Phone",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "datepicker",
-											label: this._("Birthday"),
+											label: _("Birthday"),
 											name: "Birthday",
 											labelWidth: myLabelWidth
 										},
@@ -127,11 +127,11 @@ export default class Form extends JetView {
 														{},
 														{
 															view: "button",
-															value: this._("Change photo")
+															value: _("Change photo")
 														},
 														{
 															view: "button",
-															value: this._("Delete photo")
+															value: _("Delete photo")
 														}
 													]
 												}
@@ -148,16 +148,16 @@ export default class Form extends JetView {
 								{},
 								{
 									view: "button",
-									value: this._("Cancel"),
+									value: _("Cancel"),
 									width: 150,
 									click: () => this.close()
 								},
 								{
 									view: "button",
 									localId: "SaveBtn",
-									value: this._("Add"),
+									value: _("Add"),
 									width: 150,
-									css: "webixthis._primary",
+									css: "webix_primary",
 									click: () => this.saveContact()
 								}
 							]
@@ -176,14 +176,15 @@ export default class Form extends JetView {
 	}
 
 	urlChange() {
+		const _ = this.app.getService("locale")._;
 		this.id = this.getParam("id", true);
 		if (+this.id === 0) this.clearAll();
 		if (this.id) {
 			this.form.setValues(contacts.getItem(this.id));
 			this.formTitle.setValues({
-				title: this._("Edit")
+				title: _("Edit")
 			});
-			this.saveBtn.setValue(this._("Save"));
+			this.saveBtn.setValue(_("Save"));
 		}
 	}
 
@@ -205,9 +206,10 @@ export default class Form extends JetView {
 	}
 
 	close() {
+		const _ = this.app.getService("locale")._;
 		this.clearAll();
 		this.app.callEvent("app:action:contacts:showInfo");
-		this.saveBtn.setValue("Add");
+		this.saveBtn.setValue(_("Add"));
 	}
 
 	clearAll() {

@@ -5,15 +5,15 @@ import statusesTable from "./statusesTable";
 
 export default class SettingsView extends JetView {
 	config() {
-		this._ = this.app.getService("locale")._;
+		const _ = this.app.getService("locale")._;
 
 		const segmentedButton = {
 			view: "segmented",
 			localId: "lang",
 			value: "en",
 			options: [
-				{id: "ru", value: this._("Russian")},
-				{id: "en", value: this._("English")}
+				{id: "ru", value: _("Russian")},
+				{id: "en", value: _("English")}
 			],
 			click: () => this.toggleLanguage()
 		};

@@ -4,7 +4,7 @@ import activityTypes from "../../models/activityTypes";
 
 export default class activityTypesTable extends JetView {
 	config() {
-		this._ = this.app.getService("locale")._;
+		const _ = this.app.getService("locale")._;
 		return {
 			rows: [
 				{
@@ -16,14 +16,14 @@ export default class activityTypesTable extends JetView {
 					columns: [
 						{
 							id: "Value",
-							header: this._("Value"),
+							header: _("Value"),
 							sort: "text",
 							width: 120,
 							fillspace: true
 						},
 						{
 							id: "Icon",
-							header: this._("Icon"),
+							header: _("Icon"),
 							width: 200,
 							fillspace: true,
 							sort: "text"
@@ -41,8 +41,8 @@ export default class activityTypesTable extends JetView {
 						delete: (e, id) => {
 							webix
 								.confirm({
-									title: this._("Delete activity?"),
-									text: this._(
+									title: _("Delete activity?"),
+									text: _(
 										"Are you sure about that? This is cannot be undone!"
 									)
 								})
@@ -63,18 +63,18 @@ export default class activityTypesTable extends JetView {
 					elements: [
 						{
 							view: "text",
-							placeholder: this._("Type of activity"),
+							placeholder: _("Type of activity"),
 							name: "Value",
 							invalidMessage: "Type of activity is required!"
 						},
 						{
 							view: "text",
-							placeholder: this._("Icon name"),
+							placeholder: _("Icon name"),
 							name: "Icon"
 						},
 						{
 							view: "button",
-							value: this._("Save"),
+							value: _("Save"),
 							css: "webix_primary",
 							click: () => {
 								if (!this.form.validate()) return;
