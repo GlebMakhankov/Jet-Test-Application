@@ -73,5 +73,5 @@ export default {
 	Icon: "Icon",
 	Value: "Value",
 	"Status name": "Status name",
-	Clear: "Clear",
+	Clear: "Clear"
 };

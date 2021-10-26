@@ -39,6 +39,9 @@ export default class InfoTemplate extends JetView {
 	}
 
 	getTemplate(obj) {
+		const statusID = obj.StatusID || null;
+		const status = statusID ? statuses.data.getItem(statusID) : null;
+		const statusValue = status ? status.value : null;
 		return `
 		<div class="contactInfoImageBlock">
 			<img src="${
@@ -47,7 +50,7 @@ export default class InfoTemplate extends JetView {
 		: "http://simpleicon.com/wp-content/uploads/user1.svg"
 }"
 			></img>
-			<div>${obj.StatusID ? statuses.data.getItem(obj.StatusID).value : "-"}</div>
+			<div>${statusValue || "-"}</div>
 		</div>
 		<div class="contactInfoTextBlock">
 			<ul>

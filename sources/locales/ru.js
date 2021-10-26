@@ -73,5 +73,5 @@ export default {
 	Icon: "Иконка",
 	Value: "Название",
 	"Status name": "Название статуса",
-	Clear: "Очистить",
+	Clear: "Очистить"
 };
