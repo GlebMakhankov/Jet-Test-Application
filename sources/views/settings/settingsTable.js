@@ -49,6 +49,7 @@ export default class SettingsTable extends JetView {
                 })
                 .then(() => {
                   this._collection.remove(id);
+                  this.clearAll();
                 });
               return false;
             },
@@ -74,15 +75,26 @@ export default class SettingsTable extends JetView {
               name: "Icon",
             },
             {
-              view: "button",
-              inputWidth: 200,
-              align: "right",
-              value: _("Save"),
-              css: "webix_primary",
-              click: () => {
-                if (!this.form.validate()) return;
-                this.saveEntry();
-              },
+              cols: [
+                {
+                  view: "button",
+						inputWidth: 200,
+                  align: "right",
+                  value: _("Clear"),
+                  click: () => this.clearAll(),
+					},
+					{
+						view: "button",
+						width: 200,
+                  align: "right",
+                  value: _("Save"),
+                  css: "webix_primary",
+                  click: () => {
+                    if (!this.form.validate()) return;
+                    this.saveEntry();
+                  },
+                },
+              ],
             },
           ],
         },
