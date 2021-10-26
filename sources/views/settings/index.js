@@ -6,12 +6,17 @@ import statuses from "../../models/statuses";
 
 export default class SettingsView extends JetView {
   config() {
-    const _ = this.app.getService("locale")._;
+    const locale = this.app.getService("locale");
+    const _ = locale._;
+    const lang = locale.getLang();
 
     const segmentedButton = {
       view: "segmented",
       localId: "lang",
-      value: "en",
+      label: _("Language"),
+      value: lang,
+      inputWidth: 300,
+      align: "right",
       options: [
         { id: "ru", value: "Русский" },
         { id: "en", value: "English" },
@@ -20,6 +25,7 @@ export default class SettingsView extends JetView {
     };
 
     return {
+      margin: 10,
       rows: [
         segmentedButton,
         {

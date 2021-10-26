@@ -68,6 +68,7 @@ export default {
 
   // Settings
   // Lang
+  "Language":"Язык",
   "Type of activity": "Тип события",
   "Icon name": "Название иконки",
   Icon: "Иконка",

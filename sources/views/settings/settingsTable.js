@@ -12,7 +12,7 @@ export default class SettingsTable extends JetView {
       rows: [
         {
           view: "datatable",
-          minWidth: 700,
+          minWidth: 200,
           localId: "table",
           select: "row",
           scrollX: false,
@@ -75,6 +75,8 @@ export default class SettingsTable extends JetView {
             },
             {
               view: "button",
+              inputWidth: 200,
+              align: "right",
               value: _("Save"),
               css: "webix_primary",
               click: () => {

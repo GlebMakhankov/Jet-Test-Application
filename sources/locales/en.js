@@ -68,6 +68,7 @@ export default {
 
   // Settings
   // Lang
+  "Language":"Language",
   "Type of activity": "Type of activity",
   "Icon name": "Icon name",
   Icon: "Icon",
