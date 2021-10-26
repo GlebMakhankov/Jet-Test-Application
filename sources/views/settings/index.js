@@ -1,34 +1,44 @@
-import {JetView} from "webix-jet";
+import { JetView } from "webix-jet";
 
-import activityTypesTable from "./activityTypesTable";
-import statusesTable from "./statusesTable";
+import SettingsTable from "./settingsTable";
+import activityTypes from "../../models/activityTypes";
+import statuses from "../../models/statuses";
 
 export default class SettingsView extends JetView {
-	config() {
-		const _ = this.app.getService("locale")._;
+  config() {
+    const _ = this.app.getService("locale")._;
 
-		const segmentedButton = {
-			view: "segmented",
-			localId: "lang",
-			value: "en",
-			options: [
-				{id: "ru", value: "Русский"},
-				{id: "en", value: "English"}
-			],
-			click: () => this.toggleLanguage()
-		};
+    const segmentedButton = {
+      view: "segmented",
+      localId: "lang",
+      value: "en",
+      options: [
+        { id: "ru", value: "Русский" },
+        { id: "en", value: "English" },
+      ],
+      click: () => this.toggleLanguage(),
+    };
 
+    return {
+      rows: [
+        segmentedButton,
+        {
+          cols: [
+            new SettingsTable(this.app, "", activityTypes),
+            new SettingsTable(this.app, "", statuses),
+          ],
+        },
+      ],
+    };
+  }
 
-		return {rows: [segmentedButton, {cols: [activityTypesTable, statusesTable]}]};
-	}
+  init() {
+    this.lang = this.$$("lang");
+  }
 
-	init() {
-		this.lang = this.$$("lang");
-	}
-
-	toggleLanguage() {
-		const langs = this.app.getService("locale");
-		const value = this.lang.getValue();
-		langs.setLang(value);
-	}
+  toggleLanguage() {
+    const langs = this.app.getService("locale");
+    const value = this.lang.getValue();
+    langs.setLang(value);
+  }
 }

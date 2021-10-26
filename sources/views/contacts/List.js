@@ -81,19 +81,19 @@ export default class List extends JetView {
     const filterQuery = this.search.getValue().trim().toLowerCase();
     if (!filterQuery) return this.list.filter();
 
-    const firstChar = filterQuery.charAt(0);
-    if (firstChar === "=" || firstChar === ">" || firstChar === "<") {
-      return this.listFilterByDate(filterQuery, firstChar);
+    const operator = filterQuery.charAt(0);
+    if (operator === "=" || operator === ">" || operator === "<") {
+      return this.listFilterByDate(filterQuery, operator);
     }
 
     return this.listFilterByText(filterQuery);
   }
 
-  listFilterByDate(filterQuery, firstChar) {
+  listFilterByDate(filterQuery, operator) {
     this.list.filter((contact) => {
       const birthdayYear = this.strToDate(contact.Birthday).getFullYear();
       const query = +filterQuery.slice(1);
-      switch (firstChar) {
+      switch (operator) {
         case "=":
           return birthdayYear === query;
         case ">":
