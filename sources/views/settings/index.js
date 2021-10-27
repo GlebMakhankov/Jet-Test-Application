@@ -30,8 +30,26 @@ export default class SettingsView extends JetView {
 				segmentedButton,
 				{
 					cols: [
-						new SettingsTable(this.app, "", activityTypes),
-						new SettingsTable(this.app, "", statuses)
+						{
+							rows: [
+								{
+									view: "template",
+									template: _("Activity types settings"),
+									type: "header"
+								},
+								new SettingsTable(this.app, "", activityTypes)
+							]
+						},
+						{
+							rows: [
+								{
+									view: "template",
+									template: _("Statuses settings"),
+									type: "header"
+								},
+								new SettingsTable(this.app, "", statuses)
+							]
+						}
 					]
 				}
 			]

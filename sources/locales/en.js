@@ -73,5 +73,9 @@ export default {
 	Icon: "Icon",
 	Value: "Value",
 	"Status name": "Status name",
-	Clear: "Clear"
+	Clear: "Clear",
+	"This field is required!": "This field is required!",
+	"Value name": "Value name",
+	"Activity types settings": "Activity types settings",
+	"Statuses settings": "Statuses settings"
 };

@@ -163,49 +163,4 @@ export default class ActivitiesView extends JetView {
 			}
 		);
 	}
-
-	//   externalFilter(filter) {
-	//     const currentDate = new Date();
-	//     const parser = webix.Date.dateToStr("%Y-%m-%d");
-	//     const parserMonth = webix.Date.dateToStr("%Y-%m");
-	//     const getFirstAndLast = (d) => {
-	//       d = new Date(d);
-	//       const day = d.getDay();
-	//       const diff = d.getDate() - day + (+day === 0 ? -6 : 1);
-	//       return {
-	//         first: new Date(d.setDate(diff)),
-	//         last: new Date(d.setDate(diff + 6)),
-	//       };
-	//     };
-	//     const firstAndLast = getFirstAndLast(currentDate);
-
-	// 	 this.table.filterByAll();
-	//     this.table.filter((item) => {
-	//       switch (filter) {
-	//         case "overdue":
-	//           return item.date < currentDate;
-
-	//         case "completed":
-	//           return item.State === "Open";
-
-	//         case "today":
-	//           return parser(item.date) === parser(currentDate);
-
-	//         case "tomorrow":
-	//           currentDate.setDate(currentDate.getDate() + 1);
-	//           return parser(item.date) === parser(currentDate);
-
-	//         case "week":
-	//           return (
-	//             item.date > firstAndLast.first && item.date < firstAndLast.last
-	//           );
-
-	//         case "month":
-	//           return parserMonth(item.date) === parserMonth(currentDate);
-
-	//         default:
-	//           return true;
-	//       }
-	//     },"", true);
-	//   }
 }

@@ -112,7 +112,10 @@ export default class List extends JetView {
 			let baseStr = "";
 			const values = Object.entries(contact);
 			values.forEach((propArr) => {
-				if (propArr[0] === "StatusID") baseStr += statuses.find(obj => obj.id === +propArr[1], true).Value;
+				if (propArr[0] === "StatusID") {
+					const status = statuses.find(obj => obj.id === +propArr[1], true);
+					if (status) baseStr += status.Value;
+				}
 				if (
 					propArr[0].toLowerCase() !== "birthday" &&
           propArr[0].toLowerCase() !== "startdate" &&

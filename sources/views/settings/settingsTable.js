@@ -65,9 +65,9 @@ export default class SettingsTable extends JetView {
 					elements: [
 						{
 							view: "text",
-							placeholder: _("Type of activity"),
+							placeholder: _("Value name"),
 							name: "Value",
-							invalidMessage: "Type of activity is required!"
+							invalidMessage: _("This field is required!")
 						},
 						{
 							view: "text",

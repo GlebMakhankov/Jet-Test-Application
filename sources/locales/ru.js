@@ -73,5 +73,9 @@ export default {
 	Icon: "Иконка",
 	Value: "Название",
 	"Status name": "Название статуса",
-	Clear: "Очистить"
+	Clear: "Очистить",
+	"This field is required!": "Обязательное поле!",
+	"Value name": "Название значения",
+	"Activity types settings": "Настройки видов событий",
+	"Statuses settings": "Настройки статусов"
 };
