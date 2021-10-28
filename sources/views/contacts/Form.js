@@ -5,12 +5,13 @@ import statuses from "../../models/statuses";
 
 export default class Form extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		const myLabelWidth = 120;
 		return {
 			rows: [
 				{
 					localId: "formTitle",
-					template: obj => `${obj.title || "Add new"} contact`,
+					template: obj => `${obj.title || _("Add new")} ${_("contact")}`,
 					height: 50,
 					css: "contactsFormTitle"
 				},
@@ -32,53 +33,53 @@ export default class Form extends JetView {
 									rows: [
 										{
 											view: "text",
-											label: "First name",
+											label: _("First name"),
 											name: "FirstName",
 											labelWidth: myLabelWidth,
 											invalidMessage: "First name is required!"
 										},
 										{
 											view: "text",
-											label: "Last name",
+											label: _("Last name"),
 											name: "LastName",
 											labelWidth: myLabelWidth,
 											invalidMessage: "Last name is required!"
 										},
 										{
 											view: "datepicker",
-											label: "Joining date",
+											label: _("Joining date"),
 											name: "StartDate",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "richselect",
 											name: "StatusID",
-											label: "Status",
+											label: _("Status"),
 											options: statuses,
 											invalidMessage: "Contact field is required!",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
-											label: "Job",
+											label: _("Job"),
 											name: "Job",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
-											label: "Company",
+											label: _("Company"),
 											name: "Company",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
-											label: "Website",
+											label: _("Website"),
 											name: "Website",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "textarea",
-											name: "Address",
+											name: _("Address"),
 											label: "Address",
 											height: 100,
 											labelWidth: myLabelWidth
@@ -90,25 +91,25 @@ export default class Form extends JetView {
 									rows: [
 										{
 											view: "text",
-											label: "Email",
+											label: _("Email"),
 											name: "Email",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
-											label: "Skype",
+											label: _("Skype"),
 											name: "Skype",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "text",
-											label: "Phone",
+											label: _("Phone"),
 											name: "Phone",
 											labelWidth: myLabelWidth
 										},
 										{
 											view: "datepicker",
-											label: "Birthday",
+											label: _("Birthday"),
 											name: "Birthday",
 											labelWidth: myLabelWidth
 										},
@@ -116,21 +117,30 @@ export default class Form extends JetView {
 											margin: 20,
 											cols: [
 												{
-													template: `
-														<img src="http://simpleicon.com/wp-content/uploads/user1.svg" />
-													`
+													template: obj => `
+														<img src="${
+                              obj.Photo ||
+                              "http://simpleicon.com/wp-content/uploads/user1.svg"
+                            }" />
+													`,
+													localId: "Photo"
 												},
 												{
 													margin: 20,
 													rows: [
 														{},
 														{
-															view: "button",
-															value: "Change photo"
+															view: "uploader",
+															value: _("Change photo"),
+															autosend: false,
+															on: {
+																onAfterFileAdd: obj => this.addPhoto(obj.file)
+															}
 														},
 														{
 															view: "button",
-															value: "Delete photo"
+															value: _("Delete photo"),
+															click: () => this.photo.setValues({Photo: ""})
 														}
 													]
 												}
@@ -147,14 +157,14 @@ export default class Form extends JetView {
 								{},
 								{
 									view: "button",
-									value: "Cancel",
+									value: _("Cancel"),
 									width: 150,
 									click: () => this.close()
 								},
 								{
 									view: "button",
 									localId: "SaveBtn",
-									value: "Add",
+									value: _("Add"),
 									width: 150,
 									css: "webix_primary",
 									click: () => this.saveContact()
@@ -172,15 +182,23 @@ export default class Form extends JetView {
 		this.parent = this.getParentView();
 		this.saveBtn = this.$$("SaveBtn");
 		this.formTitle = this.$$("formTitle");
+		this.photo = this.$$("Photo");
 	}
 
 	urlChange() {
+		const _ = this.app.getService("locale")._;
 		this.id = this.getParam("id", true);
 		if (+this.id === 0) this.clearAll();
 		if (this.id) {
-			this.form.setValues(contacts.getItem(this.id));
-			this.formTitle.setValues({title: "Edit"});
-			this.saveBtn.setValue("Save");
+			const contact = contacts.getItem(this.id);
+			this.form.setValues(contact);
+			this.formTitle.setValues({
+				title: _("Edit")
+			});
+			this.saveBtn.setValue(_("Save"));
+			if (contact.Photo) {
+				this.photo.setValues({Photo: contact.Photo});
+			}
 		}
 	}
 
@@ -190,6 +208,7 @@ export default class Form extends JetView {
 		const parser = webix.Date.dateToStr("%Y-%m-%d %H:%i");
 		entry.StartDate = parser(entry.StartDate) || parser(new Date());
 		entry.Birthday = parser(entry.Birthday) || entry.StartDate;
+		entry.Photo = this.photo.getValues().Photo;
 		if (entry.id) {
 			contacts.updateItem(entry.id, entry);
 		}
@@ -202,14 +221,27 @@ export default class Form extends JetView {
 	}
 
 	close() {
+		const _ = this.app.getService("locale")._;
 		this.clearAll();
 		this.app.callEvent("app:action:contacts:showInfo");
-		this.saveBtn.setValue("Add");
+		this.saveBtn.setValue(_("Add"));
 	}
 
 	clearAll() {
 		this.id = null;
 		this.form.clear();
 		this.form.clearValidation();
+	}
+
+	addPhoto(file) {
+		const reader = new FileReader();
+		reader.addEventListener(
+			"load",
+      () => this.photo.setValues({Photo: reader.result}),
+      false
+		);
+		if (file) {
+			reader.readAsDataURL(file);
+		}
 	}
 }

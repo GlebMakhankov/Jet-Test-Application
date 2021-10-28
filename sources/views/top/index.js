@@ -4,6 +4,7 @@ import AppHeader from "./AppHeader";
 
 export default class TopView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		const menu = {
 			view: "menu",
 			id: "top:menu",
@@ -13,9 +14,9 @@ export default class TopView extends JetView {
 			select: true,
 			template: "<span class='webix_icon #icon#'></span> #value# ",
 			data: [
-				{value: "Contacts", id: "contacts", icon: "mdi mdi-account"},
-				{value: "Activities", id: "activities", icon: "mdi mdi-calendar"},
-				{value: "Settings", id: "settings", icon: "mdi mdi-cog"}
+				{value: _("Contacts"), id: "contacts", icon: "mdi mdi-account-group"},
+				{value: _("Activities"), id: "activities", icon: "mdi mdi-calendar-check"},
+				{value: _("Settings"), id: "settings", icon: "mdi mdi-cog"}
 			],
 			on: {
 				onAfterSelect(id) {

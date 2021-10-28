@@ -5,6 +5,7 @@ import contacts from "../../models/contacts";
 
 export default class InfoHeader extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			view: "toolbar",
 			elements: [
@@ -17,8 +18,8 @@ export default class InfoHeader extends JetView {
 				},
 				{
 					view: "button",
-					label: "Delete",
-					width: 100,
+					label: _("Delete"),
+					width: 150,
 					align: "right",
 					type: "icon",
 					icon: "mdi mdi-delete",
@@ -26,8 +27,8 @@ export default class InfoHeader extends JetView {
 				},
 				{
 					view: "button",
-					label: "Edit",
-					width: 100,
+					label: _("Edit"),
+					width: 150,
 					align: "right",
 					type: "icon",
 					icon: "mdi mdi-square-edit-outline",
@@ -43,10 +44,11 @@ export default class InfoHeader extends JetView {
 	}
 
 	deleteContact() {
+		const _ = this.app.getService("locale")._;
 		webix
 			.confirm({
-				title: "Delete contact?",
-				text: "This is cannot be undone! All information, activities and files associated with this contact will be deleted."
+				title: _("Delete contact?"),
+				text: _("This is cannot be undone! All information, activities and files associated with this contact will be deleted.")
 			})
 			.then(() => {
 				contacts.remove(this.id);

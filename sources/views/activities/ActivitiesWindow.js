@@ -4,6 +4,7 @@ import ActivitiesForm from "./ActivitiesForm";
 
 export default class ActivitiesWindow extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			view: "window",
 			modal: true,
@@ -11,14 +12,14 @@ export default class ActivitiesWindow extends JetView {
 			height: 500,
 			width: 650,
 			position: "center",
-			head: "Add activity",
+			head: _("Add activity"),
 			body: ActivitiesForm
 		};
 	}
 
 	showWindow(data) {
 		if (data) {
-			this.changeHead("Edit");
+			this.changeHead(this.app.getService("locale")._("Edit"));
 			this.setDataToForm(data);
 		}
 		this.getRoot().show();

@@ -6,6 +6,7 @@ import ActivitiesWindow from "../activities/ActivitiesWindow";
 
 export default class InfoActivities extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			rows: [
 				{
@@ -48,7 +49,7 @@ export default class InfoActivities extends JetView {
 						{
 							header: "",
 							template:
-								"<span class='mdi mdi-square-edit-outline editActivity'></span>",
+                "<span class='mdi mdi-square-edit-outline editActivity'></span>",
 							width: 50
 						},
 						{
@@ -66,8 +67,8 @@ export default class InfoActivities extends JetView {
 						deleteActivity: (e, id) => {
 							webix
 								.confirm({
-									title: "Delete activity?",
-									text: "Are you sure about that? This is cannot be undone!"
+									title: _("Delete activity?"),
+									text: _("Are you sure about that? This is cannot be undone!")
 								})
 								.then(() => {
 									activities.remove(id);
@@ -82,7 +83,7 @@ export default class InfoActivities extends JetView {
 						{},
 						{
 							view: "button",
-							label: "Add activity",
+							label: _("Add activity"),
 							width: 150,
 							type: "icon",
 							icon: "mdi mdi-plus-circle",
