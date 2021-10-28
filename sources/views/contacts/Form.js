@@ -139,7 +139,8 @@ export default class Form extends JetView {
 														},
 														{
 															view: "button",
-															value: _("Delete photo")
+															value: _("Delete photo"),
+															click: () => this.photo.setValues({Photo: ""})
 														}
 													]
 												}
