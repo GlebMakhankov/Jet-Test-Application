@@ -117,17 +117,25 @@ export default class Form extends JetView {
 											margin: 20,
 											cols: [
 												{
-													template: `
-														<img src="http://simpleicon.com/wp-content/uploads/user1.svg" />
-													`
+													template: obj => `
+														<img src="${
+                              obj.Photo ||
+                              "http://simpleicon.com/wp-content/uploads/user1.svg"
+                            }" />
+													`,
+													localId: "Photo"
 												},
 												{
 													margin: 20,
 													rows: [
 														{},
 														{
-															view: "button",
-															value: _("Change photo")
+															view: "uploader",
+															value: _("Change photo"),
+															autosend: false,
+															on: {
+																onAfterFileAdd: obj => this.addPhoto(obj.file)
+															}
 														},
 														{
 															view: "button",
@@ -173,6 +181,7 @@ export default class Form extends JetView {
 		this.parent = this.getParentView();
 		this.saveBtn = this.$$("SaveBtn");
 		this.formTitle = this.$$("formTitle");
+		this.photo = this.$$("Photo");
 	}
 
 	urlChange() {
@@ -180,11 +189,15 @@ export default class Form extends JetView {
 		this.id = this.getParam("id", true);
 		if (+this.id === 0) this.clearAll();
 		if (this.id) {
-			this.form.setValues(contacts.getItem(this.id));
+			const contact = contacts.getItem(this.id);
+			this.form.setValues(contact);
 			this.formTitle.setValues({
 				title: _("Edit")
 			});
 			this.saveBtn.setValue(_("Save"));
+			if (contact.Photo) {
+				this.photo.setValues({Photo: contact.Photo});
+			}
 		}
 	}
 
@@ -194,6 +207,7 @@ export default class Form extends JetView {
 		const parser = webix.Date.dateToStr("%Y-%m-%d %H:%i");
 		entry.StartDate = parser(entry.StartDate) || parser(new Date());
 		entry.Birthday = parser(entry.Birthday) || entry.StartDate;
+		entry.Photo = this.photo.getValues().Photo;
 		if (entry.id) {
 			contacts.updateItem(entry.id, entry);
 		}
@@ -216,5 +230,17 @@ export default class Form extends JetView {
 		this.id = null;
 		this.form.clear();
 		this.form.clearValidation();
+	}
+
+	addPhoto(file) {
+		const reader = new FileReader();
+		reader.addEventListener(
+			"load",
+      () => this.photo.setValues({Photo: reader.result}),
+      false
+		);
+		if (file) {
+			reader.readAsDataURL(file);
+		}
 	}
 }

@@ -45,8 +45,8 @@ export default class InfoTemplate extends JetView {
 		return `
 		<div class="contactInfoImageBlock">
 			<img src="${
-	obj.photo
-		? obj.photo
+	obj.Photo
+		? obj.Photo
 		: "http://simpleicon.com/wp-content/uploads/user1.svg"
 }"
 			></img>

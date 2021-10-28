@@ -128,7 +128,7 @@ export default class ActivitiesView extends JetView {
 
 					switch (filter) {
 						case "overdue":
-							return item.date < currentDate;
+							return item.date < currentDate && item.State !== "Open";
 
 						case "completed":
 							return item.State === "Open";

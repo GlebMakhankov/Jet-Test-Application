@@ -70,7 +70,9 @@ export default class List extends JetView {
 
 	getListItemHTML(obj) {
 		return `
-	  <img src="http://simpleicon.com/wp-content/uploads/user1.svg"></img>
+	  <img src="${
+	obj.Photo || "http://simpleicon.com/wp-content/uploads/user1.svg"
+}"></img>
 	  <div>
 		  <div>${obj.FirstName} ${obj.LastName}</div>
 		  <span>${obj.Company}</span>
@@ -118,8 +120,9 @@ export default class List extends JetView {
 				}
 				if (
 					propArr[0].toLowerCase() !== "birthday" &&
-          propArr[0].toLowerCase() !== "startdate" &&
-          typeof propArr[1] !== "number"
+					propArr[0].toLowerCase() !== "startdate" &&
+					propArr[0].toLowerCase() !== "photo" &&
+					typeof propArr[1] !== "number"
 				) baseStr += propArr[1];
 			});
 			return !!baseStr.toLowerCase().includes(filterQuery);
